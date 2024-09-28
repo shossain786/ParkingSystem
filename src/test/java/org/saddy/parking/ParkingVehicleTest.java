@@ -24,9 +24,9 @@ public class ParkingVehicleTest {
         parkingLot.displayAvailableSpots();
 
         parkingLot.removeVehicle(smallCar);
-//        parkingLot.removeVehicle(smallCar1);
-//        parkingLot.removeVehicle(mediumCar);
-//        parkingLot.removeVehicle(largeCar);
+        parkingLot.removeVehicle(smallCar1);
+        parkingLot.removeVehicle(mediumCar);
+        parkingLot.removeVehicle(largeCar);
 
         parkingLot.displayAvailableSpots();
     }
