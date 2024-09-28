@@ -24,14 +24,12 @@ public class ParkingLotGUI {
     }
 
     private void initialize() {
-        // Initialize the main frame
         frame = new JFrame();
         frame.setTitle("Parking Lot System");
         frame.setBounds(100, 100, 450, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        // Create labels and input fields for parking lot sizes
         JLabel lblSmallSpots = new JLabel("Small Spots:");
         lblSmallSpots.setBounds(10, 20, 80, 25);
         frame.getContentPane().add(lblSmallSpots);
@@ -59,7 +57,6 @@ public class ParkingLotGUI {
         frame.getContentPane().add(largeSpotsField);
         largeSpotsField.setColumns(10);
 
-        // Button to create parking lot
         JButton btnCreateParkingLot = new JButton("Create Parking Lot");
         btnCreateParkingLot.setBounds(10, 120, 200, 30);
         frame.getContentPane().add(btnCreateParkingLot);
@@ -70,7 +67,6 @@ public class ParkingLotGUI {
             }
         });
 
-        // Input field for vehicle license plate
         JLabel lblLicensePlate = new JLabel("License Plate:");
         lblLicensePlate.setBounds(10, 160, 80, 25);
         frame.getContentPane().add(lblLicensePlate);
@@ -80,7 +76,6 @@ public class ParkingLotGUI {
         frame.getContentPane().add(vehicleLicenseField);
         vehicleLicenseField.setColumns(10);
 
-        // Combo box for vehicle types (small, medium, large)
         JLabel lblVehicleType = new JLabel("Vehicle Type:");
         lblVehicleType.setBounds(10, 190, 80, 25);
         frame.getContentPane().add(lblVehicleType);
@@ -90,7 +85,6 @@ public class ParkingLotGUI {
         vehicleTypeCombo.setBounds(100, 190, 100, 25);
         frame.getContentPane().add(vehicleTypeCombo);
 
-        // Buttons to park or remove vehicle
         JButton btnParkVehicle = new JButton("Park Vehicle");
         btnParkVehicle.setBounds(10, 230, 150, 30);
         frame.getContentPane().add(btnParkVehicle);
@@ -111,7 +105,6 @@ public class ParkingLotGUI {
             }
         });
 
-        // Labels to display available parking spots
         availableSmallSpots = new JLabel("Small spots available: 0");
         availableSmallSpots.setBounds(200, 160, 200, 25);
         frame.getContentPane().add(availableSmallSpots);
@@ -124,11 +117,9 @@ public class ParkingLotGUI {
         availableLargeSpots.setBounds(200, 220, 200, 25);
         frame.getContentPane().add(availableLargeSpots);
 
-        // Set the frame visibility
         frame.setVisible(true);
     }
 
-    // Method to create parking lot
     private void createParkingLot() {
         int smallSpots = Integer.parseInt(smallSpotsField.getText());
         int mediumSpots = Integer.parseInt(mediumSpotsField.getText());
@@ -139,7 +130,6 @@ public class ParkingLotGUI {
         updateAvailabilityDisplay();
     }
 
-    // Method to park a vehicle
     private void parkVehicle() {
         if (parkingLot == null) {
             JOptionPane.showMessageDialog(frame, "Create a parking lot first.");
@@ -174,27 +164,25 @@ public class ParkingLotGUI {
 
         updateAvailabilityDisplay();
     }
-
-    // Method to remove a vehicle
     private void removeVehicle() {
         if (parkingLot == null) {
             JOptionPane.showMessageDialog(frame, "Create a parking lot first.");
             return;
         }
 
-//        String licensePlate = vehicleLicenseField.getText();
-//        boolean removed = parkingLot.removeVehicle(licensePlate);
-//
-//        if (removed) {
-//            JOptionPane.showMessageDialog(frame, "Vehicle removed successfully.");
-//        } else {
-//            JOptionPane.showMessageDialog(frame, "Vehicle not found.");
-//        }
+        String licensePlate = vehicleLicenseField.getText().trim(); // Trim to avoid leading/trailing spaces
+        boolean removed = parkingLot.removeVehicle(licensePlate);
+
+        if (removed) {
+            JOptionPane.showMessageDialog(frame, "Vehicle removed successfully.");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Vehicle not found.");
+        }
 
         updateAvailabilityDisplay();
     }
 
-    // Method to update the display of available spots
+
     private void updateAvailabilityDisplay() {
         availableSmallSpots.setText("Small spots available: " + parkingLot.countAvailableSpots(VehicleSize.SMALL));
         availableMediumSpots.setText("Medium spots available: " + parkingLot.countAvailableSpots(VehicleSize.MEDIUM));

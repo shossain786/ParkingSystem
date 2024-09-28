@@ -60,8 +60,11 @@ public class ParkingLot {
         return false;
     }
 
-    public boolean removeVehicle(Vehicle vehicle) {
-        if (parkedVehicles.containsKey(vehicle.getLicensePlate())) {
+    public boolean removeVehicle(String licensePlate) {
+        Vehicle vehicle = parkedVehicles.get(licensePlate);
+
+        if (vehicle != null) {
+            // Increase the available spot count based on the vehicle's size
             switch (vehicle.getSize()) {
                 case SMALL:
                     availableSmallSpots++;
@@ -73,11 +76,11 @@ public class ParkingLot {
                     availableLargeSpots++;
                     break;
             }
-            parkedVehicles.remove(vehicle.getLicensePlate());
+            parkedVehicles.remove(licensePlate);
             System.out.println(vehicle.getLicensePlate() + " has been removed from the parking lot.");
             return true;
         } else {
-            System.out.println("Vehicle with license plate " + vehicle.getLicensePlate() + " not found.");
+            System.out.println("Vehicle with license plate " + licensePlate + " not found.");
             return false;
         }
     }
@@ -114,5 +117,4 @@ public class ParkingLot {
                 throw new IllegalArgumentException("Invalid vehicle size: " + size);
         }
     }
-
 }

@@ -38,11 +38,11 @@ public class ParkingVehicleTest {
 
         parkingLot.displayAvailableSpots();
 
-        // Test removing the vehicles
-        Assert.assertTrue(parkingLot.removeVehicle(smallCar), "Failed to remove Small Car 1");
-        Assert.assertTrue(parkingLot.removeVehicle(smallCar1), "Failed to remove Small Car 2");
-        Assert.assertTrue(parkingLot.removeVehicle(mediumCar), "Failed to remove Medium Car");
-        Assert.assertTrue(parkingLot.removeVehicle(largeCar), "Failed to remove Large Car");
+        // Test removing the vehicles using license plates
+        Assert.assertTrue(parkingLot.removeVehicle(smallCar.getLicensePlate()), "Failed to remove Small Car 1");
+        Assert.assertTrue(parkingLot.removeVehicle(smallCar1.getLicensePlate()), "Failed to remove Small Car 2");
+        Assert.assertTrue(parkingLot.removeVehicle(mediumCar.getLicensePlate()), "Failed to remove Medium Car");
+        Assert.assertTrue(parkingLot.removeVehicle(largeCar.getLicensePlate()), "Failed to remove Large Car");
 
         // Verify available spots after removing
         Assert.assertEquals(parkingLot.getAvailableSmallSpots(), 2, "Incorrect available small spots after removal.");
