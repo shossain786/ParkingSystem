@@ -1,90 +1,118 @@
 package org.saddy.parking;
 
-import org.saddy.vehicles.ParkingSpot;
 import org.saddy.vehicles.Vehicle;
 import org.saddy.vehicles.VehicleSize;
 
-//Class to Manage Spots
+import java.util.HashMap;
+import java.util.Map;
+
 public class ParkingLot {
-    private ParkingSpot[] smallSpots;
-    private ParkingSpot[] mediumSpot;
-    private ParkingSpot[] largeSpot;
+    private int totalSmallSpots;
+    private int totalMediumSpots;
+    private int totalLargeSpots;
 
-    public ParkingLot(int smallCount, int mediumCount, int largeCount) {
-        smallSpots = new ParkingSpot[smallCount];
-        mediumSpot = new ParkingSpot[mediumCount];
-        largeSpot = new ParkingSpot[largeCount];
+    private int availableSmallSpots;
+    private int availableMediumSpots;
+    private int availableLargeSpots;
 
-        for (int i = 0; i < smallCount; i++) {
-            smallSpots[i] = new ParkingSpot(VehicleSize.SMALL);
-        }
-        for (int i = 0; i< mediumCount; i++)
-            mediumSpot[i] = new ParkingSpot(VehicleSize.MEDIUM);
+    private Map<String, Vehicle> parkedVehicles; // Track parked vehicles by license plate
 
-        for (int i = 0; i< largeCount; i++)
-            largeSpot[i] = new ParkingSpot(VehicleSize.LARGE);
+    public ParkingLot(int smallSpots, int mediumSpots, int largeSpots) {
+        this.totalSmallSpots = smallSpots;
+        this.totalMediumSpots = mediumSpots;
+        this.totalLargeSpots = largeSpots;
+
+        this.availableSmallSpots = smallSpots;
+        this.availableMediumSpots = mediumSpots;
+        this.availableLargeSpots = largeSpots;
+
+        this.parkedVehicles = new HashMap<>();
     }
 
-    public boolean parkVehicle(Vehicle vehicle){
-        if (vehicle.getSize() == VehicleSize.SMALL)
-            return parkInAnySpot(vehicle, smallSpots, mediumSpot, largeSpot);
-        else if (vehicle.getSize() == VehicleSize.MEDIUM) {
-            return parkInAnySpot(vehicle, mediumSpot, largeSpot);
-        } else {
-            return parkInAnySpot(vehicle, largeSpot);
-        }
-    }
-
-    private boolean parkInAnySpot(Vehicle vehicle, ParkingSpot[]... spotLevel) {
-        for (ParkingSpot[] spots : spotLevel) {
-            for (ParkingSpot spot : spots) {
-                if (spot.park(vehicle)) {
-                    System.out.println(vehicle.getLicensePlate() + " parked in a " + spot.getSize() + " spot.");
+    public boolean parkVehicle(Vehicle vehicle) {
+        switch (vehicle.getSize()) {
+            case SMALL:
+                if (availableSmallSpots > 0) {
+                    availableSmallSpots--;
+                    parkedVehicles.put(vehicle.getLicensePlate(), vehicle);
+                    System.out.println(vehicle.getLicensePlate() + " parked in a SMALL spot.");
                     return true;
                 }
-            }
+                break;
+            case MEDIUM:
+                if (availableMediumSpots > 0) {
+                    availableMediumSpots--;
+                    parkedVehicles.put(vehicle.getLicensePlate(), vehicle);
+                    System.out.println(vehicle.getLicensePlate() + " parked in a MEDIUM spot.");
+                    return true;
+                }
+                break;
+            case LARGE:
+                if (availableLargeSpots > 0) {
+                    availableLargeSpots--;
+                    parkedVehicles.put(vehicle.getLicensePlate(), vehicle);
+                    System.out.println(vehicle.getLicensePlate() + " parked in a LARGE spot.");
+                    return true;
+                }
+                break;
         }
-        System.out.println("Sorry! No available spot for vehicle: " + vehicle.getLicensePlate());
+        System.out.println("No available spot for " + vehicle.getLicensePlate());
         return false;
     }
 
-    public void removeVehicle(Vehicle vehicle) {
-        if (vehicle.getSize() == VehicleSize.SMALL) {
-            removeFromSpot(vehicle, smallSpots, mediumSpot, largeSpot);
-        } else if (vehicle.getSize() == VehicleSize.MEDIUM) {
-            removeFromSpot(vehicle, mediumSpot, largeSpot);
-        } else {
-            removeFromSpot(vehicle, largeSpot);
-        }
-    }
-
-    private void removeFromSpot(Vehicle vehicle, ParkingSpot[]... spotLevels){
-        for (ParkingSpot[] spots: spotLevels) {
-            for (ParkingSpot spot: spots) {
-                if (!spot.isAvailable() && spot.getCurrentVehicle() != null &&
-                spot.getCurrentVehicle().getLicensePlate().equals(vehicle.getLicensePlate())) {
-                    spot.leave();
-                    System.out.println(vehicle.getLicensePlate() + " has left the parking.");
-                    return;
-                }
+    public boolean removeVehicle(Vehicle vehicle) {
+        if (parkedVehicles.containsKey(vehicle.getLicensePlate())) {
+            switch (vehicle.getSize()) {
+                case SMALL:
+                    availableSmallSpots++;
+                    break;
+                case MEDIUM:
+                    availableMediumSpots++;
+                    break;
+                case LARGE:
+                    availableLargeSpots++;
+                    break;
             }
+            parkedVehicles.remove(vehicle.getLicensePlate());
+            System.out.println(vehicle.getLicensePlate() + " has been removed from the parking lot.");
+            return true;
+        } else {
+            System.out.println("Vehicle with license plate " + vehicle.getLicensePlate() + " not found.");
+            return false;
         }
-        System.out.println("Vehicle " + vehicle.getLicensePlate() + " not found in any spot.");
     }
 
     public void displayAvailableSpots() {
         System.out.println("Available Spots: ");
-        System.out.println("Small: " + countAvailableSpot(smallSpots));
-        System.out.println("Medium: " + countAvailableSpot(mediumSpot));
-        System.out.println("Large: " + countAvailableSpot(largeSpot));
+        System.out.println("Small: " + availableSmallSpots);
+        System.out.println("Medium: " + availableMediumSpots);
+        System.out.println("Large: " + availableLargeSpots);
     }
-    private int countAvailableSpot(ParkingSpot[] spots) {
-        int count = 0;
-        for (ParkingSpot spot: spots) {
-            if (spot.isAvailable()) {
-                count ++;
-            }
+
+    // Getter methods for testing
+    public int getAvailableSmallSpots() {
+        return availableSmallSpots;
+    }
+
+    public int getAvailableMediumSpots() {
+        return availableMediumSpots;
+    }
+
+    public int getAvailableLargeSpots() {
+        return availableLargeSpots;
+    }
+
+    public int countAvailableSpots(VehicleSize size) {
+        switch (size) {
+            case SMALL:
+                return availableSmallSpots;
+            case MEDIUM:
+                return availableMediumSpots;
+            case LARGE:
+                return availableLargeSpots;
+            default:
+                throw new IllegalArgumentException("Invalid vehicle size: " + size);
         }
-        return count;
     }
+
 }

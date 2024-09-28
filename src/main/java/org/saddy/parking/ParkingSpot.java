@@ -1,4 +1,7 @@
-package org.saddy.vehicles;
+package org.saddy.parking;
+
+import org.saddy.vehicles.Vehicle;
+import org.saddy.vehicles.VehicleSize;
 
 public class ParkingSpot {
     private VehicleSize size;

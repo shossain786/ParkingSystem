@@ -1,5 +1,7 @@
 package org.saddy.vehicles;
 
+import org.saddy.parking.ParkingSpot;
+
 public class SmallCar extends Vehicle{
     public SmallCar(String licensePlate) {
         super(licensePlate, VehicleSize.SMALL);

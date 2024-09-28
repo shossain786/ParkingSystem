@@ -14,7 +14,7 @@ based on their sizes.
 1) The Parking lot has a fixed number of spots for small, medium and large vehicles.
 2) Vehicles are of three types:
    - Small Vehicle
-   -  Medium Vehicle 
+   - Medium Vehicle 
    - Large Vehicle 
 3) Program should handle adding vehicles to the parking lot, removing them and checking available spots for each vehicle size.
 ```

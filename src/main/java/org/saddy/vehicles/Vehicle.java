@@ -1,5 +1,7 @@
 package org.saddy.vehicles;
 
+import org.saddy.parking.ParkingSpot;
+
 public abstract class Vehicle {
     protected String licensePlate;
     protected VehicleSize size;
