@@ -10,12 +10,14 @@ based on their sizes.
 ### Problem Description :-
 <hr>
 
+```text
 1) The Parking lot has a fixed number of spots for small, medium and large vehicles.
 2) Vehicles are of three types:
-        a. Small Vehicle
-        b. Medium Vehicle
-        c. Large Vehicle
-Program should handle adding vehicles to the parking lot, removing them and checking available spots for each vehicle size.
+   - Small Vehicle
+   -  Medium Vehicle 
+   - Large Vehicle 
+3) Program should handle adding vehicles to the parking lot, removing them and checking available spots for each vehicle size.
+```
 
 ### Test To Check The System:-
 <hr>
@@ -46,6 +48,7 @@ public void parkingVehicleTest() {
 ```
 ### Output Of The Test Program
 <hr>
+
 ```text
 MH12S2012 parked in a SMALL spot.
 MH12S3412 parked in a MEDIUM spot.
