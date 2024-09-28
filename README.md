@@ -1,16 +1,15 @@
 # Parking System
 
 ### About the Project
-```
+
 This Project is to build a Parking Lot System, with features like add cars, remove cars and checking for available spots. 
 The Parking lot should support different sizes, such as small, medium and large and accomodate different types of vehicles
 based on their sizes.
-```
+
 
 ### Problem Description :-
 <hr>
 
-```
 1) The Parking lot has a fixed number of spots for small, medium and large vehicles.
 2) Vehicles are of three types:
         a. Small Vehicle
@@ -18,8 +17,9 @@ based on their sizes.
         c. Large Vehicle
 Program should handle adding vehicles to the parking lot, removing them and checking available spots for each vehicle size.
 
-```
 ### Test To Check The System:-
+<hr>
+
 ```java
 public void parkingVehicleTest() {
         ParkingLot parkingLot = new ParkingLot(2,2,2);
@@ -45,7 +45,7 @@ public void parkingVehicleTest() {
     }
 ```
 ### Output Of The Test Program
-
+<hr>
 ```text
 MH12S2012 parked in a SMALL spot.
 MH12S3412 parked in a MEDIUM spot.
