@@ -67,3 +67,6 @@ Small: 2
 Medium: 2
 Large: 2
 ```
+### Output Of The GUI
+<hr>
+<img src="/images/img.png">
